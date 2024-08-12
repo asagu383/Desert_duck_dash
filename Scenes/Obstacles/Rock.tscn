@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/Rock.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Obstacles/Obstacle.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Effectors/EffectDamage.tscn" type="PackedScene" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "Blink",
+"speed": 1.0
+} ]
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 4.29349
+
+[node name="Rock" type="Node2D"]
+scale = Vector2( 12.1136, 12.1136 )
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.397915, 0.397915 )
+frames = SubResource( 3 )
+animation = "Blink"
+
+[node name="EffectDamage" parent="." instance=ExtResource( 3 )]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EffectDamage"]
+position = Vector2( 0.247656, 0.660415 )
+shape = SubResource( 4 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+[connection signal="body_entered" from="EffectDamage" to="." method="_on_EffectDamage_body_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
