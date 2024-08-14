@@ -85,13 +85,7 @@ func kill_player():
 	
 	queue_free()
 	
-	#1 second delay before showing Menu
-	#yield(get_tree().create_timer(1.0), "timeout")
-	
-	#Debug
-	#print(game_over_UI_scene)
-	
 	#Game Over UI pops up after player dies
-	#get_tree().change_scene(game_over_UI_scene.resource_path)
+	get_tree().change_scene("res://Scenes/UI/GameOverUI.tscn")
 	
 	
